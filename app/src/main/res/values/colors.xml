@@ -2,8 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary_orange">#FFE98C</color>
-    <color name="secondary_orange">#FAAA32</color>
-    <color name="color_worst_tip">#DC1E0B</color>
-    <color name="color_best_tip">#35BA01</color>
+    <color name="primary_orange">#bcefff</color>
+    <color name="secondary_orange">#1A2C9B</color>
+    <color name="color_worst_tip">#cc0000</color>
+    <color name="color_best_tip">#338e10</color>
 </resources>
