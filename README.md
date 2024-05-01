@@ -7,21 +7,20 @@ A basic minimalist tip calculator app, built with Kotlin in Android Studio.
 - Adjust tip percent with a swipe of your finger using our intuitive slider.
 - Watch as the tip description dynamically changes color based on your chosen tip percent.
 
-![Screenshot 1](screenshots/screenshot1.png)
-![Screenshot 2](screenshots/screenshot2.png)
+<img src="screenshots/screenshot1.png" alt="Screenshot 1" width="250"/> <img src="screenshots/screenshot2.png" alt="Screenshot 2" width="250"/> <img src="screenshots/screenshot3.png" alt="Screenshot 3" width="250"/> 
   
-## Technologies Used 💻
+## Technologies Used 
 
 - Kotlin
 - Android Studio
 
-## Upcoming Enhancements 🚀
+## Upcoming Enhancements 
 
 - Easily split the bill among N people.
 - Round the final amount up or down to your liking.
 - Upgrade design and colors
 
-## How to Run
+## How to Run 🏃
 
 1. Clone this repository to your local machine.
 ```
@@ -37,4 +36,8 @@ If you'd like to contribute to this collection by adding new problems or improvi
 ## License
 
 This repository is licensed under the [MIT License](LICENSE).
+
+---
+
+Happy coding! 🚀
 
