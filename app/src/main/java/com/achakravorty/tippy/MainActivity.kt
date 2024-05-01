@@ -77,6 +77,11 @@ class MainActivity : AppCompatActivity() {
 
     // function to calculate and update tip and total value on UI
     private fun computeTipAndTotal() {
+        if (etBaseAmount.text.isEmpty()) {
+            tvTipAmount.text = ""
+            tvTotalAmount.text = ""
+            return
+        }
         // 1. Get the value of the base and tip percent
         val baseAmount = etBaseAmount.text.toString().toDouble()
         val tipPercent = seekBarTip.progress
