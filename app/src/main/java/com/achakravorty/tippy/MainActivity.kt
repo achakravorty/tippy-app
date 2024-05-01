@@ -15,6 +15,7 @@ import org.w3c.dom.Text
 
 private const val TAG = "MainActivity"
 private const val INITIAL_TIP_PERCENT = 15;
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var etBaseAmount: EditText
@@ -32,19 +33,23 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        //initialize all values
         etBaseAmount = findViewById(R.id.etBaseAmount);
         seekBarTip = findViewById(R.id.seekBarTip);
         tvTipPercentLabel = findViewById(R.id.tvTipPercentLabel)
         tvTipAmount = findViewById(R.id.tvTipAmount)
+        tvTotalAmount = findViewById(R.id.tvTotalAmount)
 
-        //initial tipPercent text
+        // initial tipPercent text
         seekBarTip.progress = INITIAL_TIP_PERCENT
         tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%"
         // update seekBar when changed
-        seekBarTip.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+        seekBarTip.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 Log.i(TAG, "onProgressChanged $progress")
                 tvTipPercentLabel.text = "$progress%"
+                computeTipAndTotal()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -56,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         // get value typed in EditText of BaseAmount
-        etBaseAmount.addTextChangedListener(object: TextWatcher {
+        etBaseAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -70,9 +75,16 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    // function to calculate and update tip and total value on UI
     private fun computeTipAndTotal() {
         // 1. Get the value of the base and tip percent
+        val baseAmount = etBaseAmount.text.toString().toDouble()
+        val tipPercent = seekBarTip.progress
         // 2. Compute the tip and total
+        val tipAmount = baseAmount * tipPercent / 100
+        val totalAmount = baseAmount + tipAmount
         // 3. Update the UI to show the values
+        tvTipAmount.text = tipAmount.toString()
+        tvTotalAmount.text = totalAmount.toString()
     }
 }
