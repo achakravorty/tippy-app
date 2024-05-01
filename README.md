@@ -1,2 +1,2 @@
 # Tippy
-A basic tip calculator app! Built eith Kotlin in Android Studio.
+A basic tip calculator app! Built with Kotlin in Android Studio.
