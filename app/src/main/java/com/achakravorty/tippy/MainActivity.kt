@@ -9,8 +9,10 @@ import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.vectordrawable.graphics.drawable.ArgbEvaluator
 import org.w3c.dom.Text
 
 private const val TAG = "MainActivity"
@@ -23,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTipPercentLabel: TextView
     private lateinit var tvTipAmount: TextView
     private lateinit var tvTotalAmount: TextView
-//    private lateinit var tvTipDescription: TextView
+    private lateinit var tvTipDescription: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,18 +43,20 @@ class MainActivity : AppCompatActivity() {
         tvTipPercentLabel = findViewById(R.id.tvTipPercentLabel)
         tvTipAmount = findViewById(R.id.tvTipAmount)
         tvTotalAmount = findViewById(R.id.tvTotalAmount)
-//        tvTipDescription = findViewById(R.id.tvTipDescription)
+        tvTipDescription = findViewById(R.id.tvTipDescription)
 
         // initial tipPercent text
         seekBarTip.progress = INITIAL_TIP_PERCENT
         tvTipPercentLabel.text = "$INITIAL_TIP_PERCENT%"
+        // inital tipDescription
+        updateTipDescription(INITIAL_TIP_PERCENT)
         // update seekBar when changed
         seekBarTip.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 Log.i(TAG, "onProgressChanged $progress")
                 tvTipPercentLabel.text = "$progress%"
                 computeTipAndTotal()
-//                updateTipDescription()
+                updateTipDescription(progress)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -78,9 +82,24 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-//    private fun updateTipDescription() {
-//        TODO("Not yet implemented")
-//    }
+    // update tipDescription text based on value of tipPercent in status bar
+    private fun updateTipDescription(tipPercent: Int) {
+        val tipDescription = when (tipPercent) {
+            in 0..9 -> "Poor"
+            in 10..14 -> "Acceptable"
+            in 5.. 19 -> "Good"
+            in 20..24 -> "Great"
+            else -> "Amazing"
+        }
+        tvTipDescription.text = tipDescription
+        // update color based on tipPercent (red to green by interpolation)
+        val color = android.animation.ArgbEvaluator().evaluate(
+            tipPercent.toFloat() / seekBarTip.max,
+            ContextCompat.getColor(this, R.color.color_worst_tip),
+            ContextCompat.getColor(this, R.color.color_best_tip)
+        ) as Int
+        tvTipDescription.setTextColor(color)
+    }
 
     // function to calculate and update tip and total value on UI
     private fun computeTipAndTotal() {
